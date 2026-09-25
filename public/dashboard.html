@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureDocs | Panel</title>
+
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-icon small">S</div>
+            <div>
+                <h2>SecureDocs</h2>
+                <span>Control de acceso</span>
+            </div>
+        </div>
+
+        <nav>
+            <button class="nav-button active" data-section="inicio">
+                Inicio
+            </button>
+
+            <button class="nav-button" data-section="documentos">
+                Documentos
+            </button>
+
+            <button class="nav-button" data-section="nuevo">
+                Nuevo documento
+            </button>
+
+            <button
+                id="btnAuditoria"
+                class="nav-button"
+                data-section="auditoria"
+            >
+                Auditoría
+            </button>
+        </nav>
+
+        <button id="cerrarSesion" class="logout">
+            Cerrar sesión
+        </button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Panel de control</h1>
+                <p>Sistema seguro de gestión documental</p>
+            </div>
+
+            <div class="user-info">
+                <strong id="nombreUsuario">Usuario</strong>
+                <span id="rolUsuario">ROL</span>
+            </div>
+
+        </header>
+
+
+        <!-- INICIO -->
+
+        <section id="inicio" class="section active-section">
+
+            <h2>Resumen del sistema</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <span>Documentos</span>
+                    <strong id="totalDocumentos">0</strong>
+                </div>
+
+                <div class="card">
+                    <span>Rol actual</span>
+                    <strong id="rolResumen">-</strong>
+                </div>
+
+                <div class="card">
+                    <span>Seguridad</span>
+                    <strong>JWT + RBAC + ABAC</strong>
+                </div>
+
+            </div>
+
+            <div class="panel">
+                <h3>SecureDocs</h3>
+
+                <p>
+                    El sistema combina autenticación mediante JWT,
+                    autorización basada en roles y políticas basadas
+                    en atributos para controlar el acceso a los documentos.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- DOCUMENTOS -->
+
+        <section id="documentos" class="section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Documentos</h2>
+                    <p>Documentos disponibles en el sistema.</p>
+                </div>
+
+                <button id="recargarDocumentos">
+                    Actualizar
+                </button>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Estado</th>
+                            <th>Confidencialidad</th>
+                            <th>País</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaDocumentos"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- NUEVO DOCUMENTO -->
+
+        <section id="nuevo" class="section">
+
+            <h2>Nuevo documento</h2>
+
+            <div class="panel">
+
+                <form id="documentForm" class="document-form">
+
+                    <label>Título</label>
+
+                    <input
+                        id="titulo"
+                        type="text"
+                        required
+                    >
+
+                    <label>Descripción</label>
+
+                    <textarea
+                        id="descripcion"
+                        rows="4"
+                    ></textarea>
+
+                    <label>Departamento</label>
+
+                    <select id="departamentoId" required>
+                        <option value="4">TECNOLOGIA</option>
+                    </select>
+
+                    <label>Nivel de confidencialidad</label>
+
+                    <select id="nivelConfidencialidad" required>
+                        <option value="1">1 - Público</option>
+                        <option value="2">2 - Interno</option>
+                        <option value="3">3 - Confidencial</option>
+                        <option value="4">4 - Restringido</option>
+                        <option value="5">5 - Alta seguridad</option>
+                    </select>
+
+                    <label>País</label>
+
+                    <select id="pais">
+                        <option value="PERU">PERU</option>
+                    </select>
+
+                    <button type="submit">
+                        Crear documento
+                    </button>
+
+                    <p id="mensajeDocumento" class="mensaje"></p>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- AUDITORÍA -->
+
+        <section id="auditoria" class="section">
+
+            <h2>Registro de auditoría</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Acción</th>
+                            <th>Recurso</th>
+                            <th>Resultado</th>
+                            <th>Motivo</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaAuditoria"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="./js/dashboard.js"></script>
+
+</body>
+</html>

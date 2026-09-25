@@ -1,0 +1,110 @@
+// use prisma-8
+model Usuario {
+  id             Int                        @id @default(autoincrement())
+  nombre         String
+  correo         String                     @unique
+  password       String
+  nivelSeguridad Int                        @default(1)
+  pais           String                     @default("PERU")
+  tipoContrato   String                     @default("INTERNO")
+  estado         String                     @default("ACTIVO")
+
+  rolId          Int
+  departamentoId Int?
+
+  rol            Rol                        @relation(fields:[rolId], references:[id])
+  departamento   Departamento?              @relation(fields:[departamentoId], references:[id])
+
+  documentos     Documento[]                @relation("PropietarioDocumento")
+  auditorias     Auditoria[]
+
+  creadoEn       TimestamptzString          @default(now())
+  actualizadoEn  temporal.updatedAtString()
+}
+
+model Rol {
+  id          Int          @id @default(autoincrement())
+  nombre      String       @unique
+  descripcion String?
+
+  usuarios    Usuario[]
+  permisos    RolPermiso[]
+}
+
+model Permiso {
+  id          Int          @id @default(autoincrement())
+  nombre      String       @unique
+  descripcion String?
+
+  roles       RolPermiso[]
+}
+
+model RolPermiso {
+  id        Int     @id @default(autoincrement())
+  rolId     Int
+  permisoId Int
+
+  rol       Rol     @relation(fields:[rolId], references:[id])
+  permiso   Permiso @relation(fields:[permisoId], references:[id])
+
+  @@unique([rolId, permisoId])
+}
+
+model Departamento {
+  id          Int         @id @default(autoincrement())
+  nombre      String      @unique
+  descripcion String?
+
+  usuarios    Usuario[]
+  documentos  Documento[]
+}
+
+model Documento {
+  id                    Int                        @id @default(autoincrement())
+  titulo                String
+  descripcion           String?
+  nivelConfidencialidad Int                        @default(1)
+  estado                String                     @default("PENDIENTE")
+  pais                  String                     @default("PERU")
+
+  propietarioId         Int
+  departamentoId        Int
+
+  propietario           Usuario                    @relation("PropietarioDocumento", fields:[propietarioId], references:[id])
+  departamento          Departamento               @relation(fields:[departamentoId], references:[id])
+
+  auditorias            Auditoria[]
+
+  fechaCreacion         TimestamptzString          @default(now())
+  actualizadoEn         temporal.updatedAtString()
+}
+
+model Politica {
+  id            Int                        @id @default(autoincrement())
+  nombre        String                     @unique
+  descripcion   String
+  tipo          String
+  activa        Boolean                    @default(true)
+
+  creadaEn      TimestamptzString          @default(now())
+  actualizadaEn temporal.updatedAtString()
+}
+
+model Auditoria {
+  id          Int               @id @default(autoincrement())
+  usuarioId   Int?
+  documentoId Int?
+
+  recurso     String
+  accion      String
+  resultado   String
+  motivo      String?
+  direccionIp String?
+  ubicacion   String?
+  dispositivo String?
+
+  usuario     Usuario?          @relation(fields:[usuarioId], references:[id])
+  documento   Documento?        @relation(fields:[documentoId], references:[id])
+
+  fecha       TimestamptzString @default(now())
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureDocs | Iniciar sesión</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="login-body">
+
+    <div class="login-container">
+
+        <div class="brand">
+            <div class="brand-icon">S</div>
+            <h1>SecureDocs</h1>
+            <p>Gestión segura de documentos</p>
+        </div>
+
+        <form id="loginForm" class="login-form">
+
+            <label for="correo">Correo electrónico</label>
+
+            <input
+                type="email"
+                id="correo"
+                placeholder="correo@securedocs.com"
+                required
+            >
+
+            <label for="password">Contraseña</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Ingrese su contraseña"
+                required
+            >
+
+            <button type="submit">
+                Iniciar sesión
+            </button>
+
+            <p id="mensajeLogin" class="mensaje"></p>
+
+        </form>
+
+        <div class="security-info">
+            🔒 Acceso protegido mediante JWT, RBAC y ABAC
+        </div>
+
+    </div>
+
+    <script src="./js/login.js"></script>
+
+</body>
+</html>
